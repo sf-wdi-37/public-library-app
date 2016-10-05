@@ -14,7 +14,7 @@ rails g model library name:string floor_count:integer floor_area:integer
 
 We want a `user` to be able to join multiple libraries, but each library can also have multiple members. This means a many-to-many or `n:n` relationship.
 
-Thus, we need a `library_user` model for our join table. It should have foreign keys for both other models. 
+Thus, we need a `library_user` model for our join table. It should have foreign keys for both other models.
 
 <details><summary>click for code</summary>
 ```ruby
@@ -24,7 +24,7 @@ rails g model library_user user:belongs_to library:belongs_to
 
 In the future we can store other things on the `library_user` model that are relevant to someone's membership in a library like join date, membership "level", etc.
 
-We will also need two different controllers for `library` and `library_user`.  Let's start by implementing CRUD with libraries in the library controller. 
+We will also need two different controllers for `library` and `library_user`.  Let's start by implementing CRUD with libraries in the library controller.
 
 ```
 rails g controller libraries
@@ -39,7 +39,7 @@ Add a route to be able to view all the libraries.
 
 Rails.application.routes.draw do
   ...
-  get "/libraries", to: "libraries#index"
+  get '/libraries', to: 'libraries#index'
 end
 ```
 </details>
@@ -81,7 +81,7 @@ To be able to add a new library, we need a `GET /libraries/new` route to display
 
 Rails.application.routes.draw do
 ...
-  get "/libraries/new", to: "libraries#new", as: "new_library"
+  get '/libraries/new', to: 'libraries#new', as: 'new_library'
 end
 
 ```
@@ -128,7 +128,7 @@ This form has nowhere to go; if we try to submit it we get an error because ther
 
 Rails.application.routes.draw do
 ...
-  post "/libraries", to: "libraries#create"
+  post '/libraries', to: 'libraries#create'
 end
 ```
 </details>
@@ -224,7 +224,7 @@ We want to be able to view all user memberships to a library. We need to decide 
 
 Rails.application.routes.draw do
   ...
-  get "/users/:user_id/libraries", to: "library_users#index", as: "user_libraries"
+  get '/users/:user_id/libraries', to: 'library_users#index', as: 'user_libraries'
 end
 ```
 </details>
@@ -289,8 +289,8 @@ We don't have an endpoint yet that allows a user to join a library, so let's add
 ```ruby
 Rails.application.routes.draw do
   ...
-  get "/users/:user_id/libraries", to: "library_users#index", as: "user_libraries"
-  post "/libraries/:library_id/users", to: "library_users#create", as: "library_users"
+  get '/users/:user_id/libraries', to: 'library_users#index', as: 'user_libraries'
+  post '/libraries/:library_id/users', to: 'library_users#create', as: 'library_users'
 end
 
 ```
@@ -336,7 +336,7 @@ class UsersController < ApplicationController
 end
 ```
 
-This `before_action` line means there must be a `logged_in?` method somewhere that will be called before the show action is run.  Add a `logged_in?` helper method to the sessions helper to check whether there is a current user. 
+This `before_action` line means there must be a `logged_in?` method somewhere that will be called before the show action is run.  Add a `logged_in?` helper method to the sessions helper to check whether there is a current user.
 </details>
 
 What other endpoints should be protected? Should an unauthenticated user be able to CRUD resources? Think about POST, PUT, and DELETE!
