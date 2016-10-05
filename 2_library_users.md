@@ -172,6 +172,8 @@ class LibraryUser < ActiveRecord::Base
 end
 ```
 
+The above will already be in the LibraryUser model! How could that be? Rails guesses that a library-user will be the join table for users and libraries and builds the model accordingly.
+
 ```ruby
 class User < ActiveRecord::Base
   has_many :library_users, dependent: :destroy
