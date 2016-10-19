@@ -1,5 +1,12 @@
 # <img src="https://cloud.githubusercontent.com/assets/7833470/10899314/63829980-8188-11e5-8cdd-4ded5bcb6e36.png" height="60"> Public Library App
 
+<!-- BEGIN SF-WDI-LABS BADGES -->
+<!-- INSTRUCTOR TODO: Make sure to manually bump version number of commits-since ("updates") badge to latest release version -->
+[![Current Labs Version](https://img.shields.io/github/tag/sf-wdi-labs/public_library_app.svg?label=sf-wdi-labs)](https://github.com/SF-WDI-LABS/public_library_app)
+[![SF-WDI-LABS Commits Since Version](https://img.shields.io/github/commits-since/sf-wdi-labs/public_library_app/v3.31.0.svg)](https://github.com/SF-WDI-LABS/public_library_app/commits/master)
+[![Issues Count](https://img.shields.io/github/issues-raw/sf-wdi-labs/public_library_app.svg)](https://github.com/SF-WDI-LABS/public_library_app/issues)
+<!-- END SF-WDI-LABS BADGES -->
+
 ![snape](https://media.giphy.com/media/jNcu2YunWZBcI/giphy.gif)
 
 ### Overview
