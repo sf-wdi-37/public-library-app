@@ -1,5 +1,7 @@
 # <img src="https://cloud.githubusercontent.com/assets/7833470/10899314/63829980-8188-11e5-8cdd-4ded5bcb6e36.png" height="60"> Public Library App
 
+![snape](https://media.giphy.com/media/jNcu2YunWZBcI/giphy.gif)
+
 ### Overview
 
 Your goal is to build a membership-tracking application in Ruby on Rails - for public libraries. Your app will allow users to sign up and track their memberships in various libraries. 
@@ -22,5 +24,3 @@ Solution branch: `1_users_and_auth`
 
 ####Part 2: [Library Users](2_library_users.md)
 Solution branch: `2_library_users`
-
-Solutions are available on solution branches `solution_1_users_and_auth` and `solution_2_library_users`.
