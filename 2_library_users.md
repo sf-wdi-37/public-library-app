@@ -166,7 +166,7 @@ Before we get start letting users become library members,  we need to wire toget
 
 <details><summary>click for code</summary>
 ```ruby
-class LibraryUser < ActiveRecord::Base
+class LibraryUser < ApplicationRecord
   belongs_to :user
   belongs_to :library
 end
@@ -175,7 +175,7 @@ end
 The above will already be in the LibraryUser model! How could that be? Rails guesses that a library-user will be the join table for users and libraries and builds the model accordingly.
 
 ```ruby
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   has_many :library_users, dependent: :destroy
   has_many :libraries, through: :library_users
   # ...
@@ -183,7 +183,7 @@ end
 ```
 
 ```ruby
-class Library < ActiveRecord::Base
+class Library < ApplicationRecord
   has_many :library_users, dependent: :destroy
   has_many :users, through: :library_users
 end
