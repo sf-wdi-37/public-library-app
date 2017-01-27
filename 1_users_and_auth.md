@@ -256,13 +256,20 @@ Visit `/users/new` in your browser.  You hope to see a form. But you probably se
 <details><summary>click for hint</summary>
   You'll need a route with the `users` prefix so that you get the `users_path` helper. Remember that, in your routes, `as:` will create a prefix.
   
-    ```
+  ```
   $ rake routes
        Prefix Verb   URI Pattern                 Controller#Action
          root GET    /                           users#index
         users GET    /users(.:format)            users#index
    new_turkey GET    /turkeys/new(.:format)      turkeys#new
   ```
+  
+  <details><summary>click for code</summary>
+  ```rb
+  # in config/routes.rb
+  get '/users', to: 'users#index', as: 'users'
+  ```
+  </details>
 </details>
 
 Now you should see a form. Inspect it to see that the `form_for` helper renders a form like the following (note the authenticity token):
