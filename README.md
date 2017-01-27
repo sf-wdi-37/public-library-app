@@ -1,6 +1,6 @@
 # Public Library Lab
 
-Your goal is to build an advanced public library application in Ruby on Rails. 
+Your goal is to build an advanced public library application in Ruby on Rails.
 
 By the end of this lab you will have:
 
@@ -48,7 +48,7 @@ Prefix Verb URI Pattern      Controller#Action
   root GET  /                users#index
 ```
 
-Note the special `Prefix` column this will be of great use later. 
+Note the special `Prefix` column this will be of great use later.
 
 Well the even bigger question now is **what to do next?** The truth is we don't have a `users#index`. We don't even have a `UsersController`. Let's practice using our `rails generate` skills.
 
@@ -167,7 +167,7 @@ class UsersController < ApplicationController
   def new
     # we need to make
     # a new user
-    # to pass to the 
+    # to pass to the
     # form later
     @user = User.new
     render :new
@@ -198,7 +198,7 @@ Sign Up
     <%= f.password_field :password, placeholder: "Password" %>
   </div>
   <%= f.submit "Sign Up" %>
-<% end %> 
+<% end %>
 ```
 
 Which renders a form like the following (note the authenticity token):
@@ -221,7 +221,7 @@ Sign Up
     <input placeholder="Password" type="password" name="user[password]" id="user_password" />
   </div>
   <input type="submit" name="commit" value="Sign Up" />
-</form> 
+</form>
 ```
 
 Note here the correlation between the key we put into `f.text_field` and `name="..."`.
@@ -229,7 +229,7 @@ Note here the correlation between the key we put into `f.text_field` and `name="
 Also note where this form is going
 
 ```html
-<form class="new_user" id="new_user" action="/users" accept-charset="UTF-8" method="post"> 
+<form class="new_user" id="new_user" action="/users" accept-charset="UTF-8" method="post">
 ```
 
 It looks like this form is sending `POST /USERS`, but we don't have that route so we have to **create** it.
@@ -333,7 +333,7 @@ Then we need a view to display the users information.
 ```html
 
 <div>
-  Welcome, <%= @user.email %> 
+  Welcome, <%= @user.email %>
 </div>
 
 ```
@@ -352,13 +352,13 @@ rails g controller sessions
 Note this will create both `sessions_controller.rb` and `sessions_helper.rb`.
 
 
-Now we should use the `session_helper` by adding our own logic to it. 
+Now we should use the `session_helper` by adding our own logic to it.
 
 
 ```ruby
 
 module SessionsHelper
-  
+
   def login(user)
     session[:user_id] = user.id
     @current_user = user
@@ -369,9 +369,7 @@ module SessionsHelper
   end
 
   def logged_in?
-    if current_user == nil
-      redirect_to new_session_path
-    end
+    !current_user.nil?
   end
 
   def logout
@@ -394,6 +392,31 @@ class ApplicationController < ActionController::Base
 end
 
 ```
+
+We'll also find it helpful to have a method we can call on any time we want to require a user to log in before following through with some controller action.  Add a private `require_login` method to the ApplicationController.
+
+```ruby
+
+class ApplicationController < ActionController::Base
+  # Prevent CSRF attacks by raising an exception.
+  # For APIs, you may want to use :null_session instead.
+  protect_from_forgery with: :exception
+
+  include SessionsHelper
+
+  private
+
+    def require_login
+      # FILL IN THIS METHOD!
+      # if there is NOT someone logged in,
+      # redirect to the login page
+    end
+
+end
+
+```
+
+
 
 
 Now, we are ready to continue. Let's add some routes to `sign_in`.
@@ -447,7 +470,7 @@ Sign In
     <%= f.password_field :password, placeholder: "Password" %>
   </div>
   <%= f.submit "Sign In" %>
-<% end %> 
+<% end %>
 
 ```
 
@@ -506,7 +529,7 @@ After a user is signed up they should be logged in.
 ```ruby
 
 class UsersController < ApplicationController
-  
+
   def create
     user_params = params.require(:user).permit(:first_name, :last_name, :email, :password)
     @user = User.create(user_params)
@@ -540,7 +563,7 @@ In the future we can store other things on the `library_user` model that a relev
 We will also need two different controllers for each of these models. Let's start by being able to do CRUD with Libraries.
 
 ```
-rails g controller libraries 
+rails g controller libraries
 ```
 
 ### A Library Index
@@ -560,7 +583,7 @@ Then we need to add a `libraries#index` method to our libraries controller.
 ```ruby
 
 class LibrariesController < ApplicationController
-  
+
   def index
     @libraries = Library.all
 
@@ -645,7 +668,7 @@ Then we need a corresponding `libraries#create`.
 ```ruby
 
 class LibrariesController < ApplicationController
-  
+
   def create
     library_params = params.require(:library).permit(:name, :floor_count, :floor_area)
     @library = Library.create(library_params)
@@ -659,7 +682,7 @@ end
 
 We now have the ability to view all libraries, and it's up to you to create methods to `edit`, `update`, `show`, and `delete` a `library`.
 
-Before we get started joining a `library` and a `user` we need to wire together our `Library` and our `User` via associations.
+Before we get started joining a `library` and a `user`, we need to wire together our `Library` and our `User` via associations.
 
 ```ruby
 class User < ActiveRecord::Base
@@ -668,15 +691,15 @@ class User < ActiveRecord::Base
 
   ...
 end
-``` 
-And We do something similar for a Library.
+```
+And we do something similar for a Library.
 
 ```ruby
 class Library < ActiveRecord::Base
   has_many :library_users
   has_many :users, through: :library_users
 end
-``` 
+```
 
 But notice here that both models are connected through as `library_users` model. Hence we need to let that model know it belongs to both of those.
 
@@ -693,17 +716,17 @@ You should now test this out in the console.
 ```bash
 > user = User.first
 > user.libraries
-#=> [] 
+#=> []
 > sfpl = Library.create({name: "SFPL"}) # San Francisco Public Library
 > sfpl.users
 #=> []
 > sfpl.users.push(user)
 > sfpl.users
-#=> [ <#User ... @id=1> ] 
+#=> [ <#User ... @id=1> ]
 > LibraryUser.count
 #=> 1
 > user.libraries
-#=> [ <#Library ... @name="SFPL" @id=1> ] 
+#=> [ <#Library ... @name="SFPL" @id=1> ]
 ```
 Joining a library requires creating `library_users` controller
 
@@ -722,12 +745,12 @@ Rails.application.routes.draw do
 end
 ```
 
-We also neeed the corresponding `index` method in the `library_users` controller
+We also need the corresponding `index` method in the `library_users` controller
 
 
 ```ruby
 class LibraryUsersController < ApplicationController
-  
+
   def index
     @user = User.find(params[:user_id])
     @libraries = @user.libraries
@@ -754,7 +777,7 @@ Then we can have the libraries index render the user and the libraries:
 We can test this by going to `localhost:/users/1/libraries`.
 
 
-## Add A User Lib
+## Add A User-Library
 
 So now that we can view, which libraries a `user` has joined we can go ahead and make a button that allows a user to `join` a library.
 
@@ -767,7 +790,7 @@ Let's go back to `libraries#index` and add a button to do just that.
 <% @libraries.each do |library| %>
   <div>
     <h3><%= library.name %></h3>
-    <% if @current_user %> 
+    <% if @current_user %>
       <%= button_to "Join", library_users_path(library) %>
     <% end %>
   </div>
@@ -778,7 +801,7 @@ We will have to define `library_user_path` to `POST /libraries/:library_id/users
 
 ```ruby
 class LibrariesController < ApplicationController
-  
+
   def index
     @libraries = Library.all
     current_user # sets @current_user
@@ -808,7 +831,7 @@ Then we need to add the `create` method to the `library_users` controller.
 
 ```ruby
 class LibraryUsersController < ApplicationController
-  
+
   ...
 
   def create
@@ -825,12 +848,12 @@ end
 
 ## Clean Up
 
-Let's say that in order to visit a `users#show` page you have to be logged in. Then we can add a special `before_action` to check this.
+Let's say that in order to visit a `users#show` page you have to be logged in. Then we can add a special `before_action` to check this.  Research `before_action`
 
 ```ruby
 class UsersController < ApplicationController
 
-  before_action :logged_in?, only: [:show]
+  before_action :require_login, only: [:show]
 
   ...
 
@@ -844,24 +867,24 @@ end
 
 ### Exercise
 
-1. Make it so a user has to be `logged_in?` before viewing anything of the `LibrariesController` actions or the `LibraryUsers` actions.
+1. Use the `require_login` method so that a user must be logged in before taking any of the `LibraryUsersController` or `LibrariesController` actions.
 
-2. Modify exercise one such anyone can view `libraries#index`, but cannot `create` or view `new` without being logged in.
+2. Modify the last exercise so that anyone can view `libraries#index`, but users cannot `create` or view `new` without being logged in.
 
 
 ## Refactoring Params
 
-Every time we take in a lot of params in a controller it's tedious to write out.
+Every time we take in a lot of params in a controller, it's tedious to write out.
 
 ```ruby
 class UsersController < ApplicationController
-  
-  ... 
+
+  ...
 
   def create
     user_params = params.require(:user).permit(:first_name, :last_name, :email, :password)
     @user = User.create(user_params)
-    login(@user) 
+    login(@user)
     redirect_to @user
   end
 
@@ -877,12 +900,12 @@ You can utilize a private method for doing this. Let's refactor.
 
 ```ruby
 class UsersController < ApplicationController
-  
-  ... 
+
+  ...
 
   def create
     @user = User.create(user_params) # calls user_params method
-    login(@user) 
+    login(@user)
     redirect_to @user
   end
 
@@ -902,9 +925,8 @@ end
 * Private methods like `user_params` are simple to implement and give us cleaner looking code. Rewrite `libraries#create` using this idea.
 
 ### Bonuses
-
+* Add better error handling and validations to the app. For example, there are many controller actions that assume some kind of `Model.create` will succeed.
 * Can you add books to the application?
     - For starters, just create a `Book` model and the associated views.
 * Can you add books to the library?
     - What kind of a relationship is that? Where would foreign keys like `book_id` and `library_id` live in your database tables?
-
