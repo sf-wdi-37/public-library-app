@@ -374,7 +374,7 @@ Once bcrypt is added, we can use the `has_secure_password` method in our user mo
 
 <details><summary>click for code</summary>
 ```ruby
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   has_secure_password
 end
 ```
@@ -613,7 +613,7 @@ Before we go forward let's go ahead and drop in a very key piece of confirmation
 
 <details><summary>click for code</summary>
 ```ruby
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   has_secure_password
 
   def self.confirm(params)
