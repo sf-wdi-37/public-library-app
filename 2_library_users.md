@@ -17,7 +17,11 @@ We want a `user` to be able to join multiple libraries, but each library can als
 Thus, we need a `library_user` model for our join table. It should have foreign keys for both other models.
 
 <details><summary>click for code</summary>
-```ruby
+```bash
+rails g model library_user user:references library:references
+```
+or
+```bash
 rails g model library_user user:belongs_to library:belongs_to
 ```
 </details>
