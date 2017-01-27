@@ -2,9 +2,10 @@
 
 <!-- BEGIN SF-WDI-LABS BADGES -->
 <!-- INSTRUCTOR TODO: Make sure to manually bump version number of commits-since ("updates") badge to latest release version -->
-[![Current Labs Version](https://img.shields.io/github/tag/sf-wdi-labs/public_library_app.svg?label=sf-wdi-labs)](https://github.com/SF-WDI-LABS/public_library_app)
+<!-- [![Current Labs Version](https://img.shields.io/github/tag/sf-wdi-labs/public_library_app.svg?label=sf-wdi-labs)](https://github.com/SF-WDI-LABS/public_library_app)
 [![SF-WDI-LABS Commits Since Version](https://img.shields.io/github/commits-since/sf-wdi-labs/public_library_app/v3.31.0.svg)](https://github.com/SF-WDI-LABS/public_library_app/commits/master)
 [![Issues Count](https://img.shields.io/github/issues-raw/sf-wdi-labs/public_library_app.svg)](https://github.com/SF-WDI-LABS/public_library_app/issues)
+-->
 <!-- END SF-WDI-LABS BADGES -->
 
 ![snape](https://media.giphy.com/media/jNcu2YunWZBcI/giphy.gif)
@@ -35,7 +36,7 @@ It's time to put all your Rails knowledge into practice! In this project, you wi
 You'll work through this project as a "time trial." You will be building the app at least 2 times, each time gaining skills through repetition. Here's how we want you to work:
 
   1. Start by making a `first-library-app` project. Move through the instructions and prompts below to build your app.  Time how long it takes you to complete the app.  Use as many hints as you'd like to check your work and make sure you get through the lab smoothly, and feel free to reference the solution branch for the part you're on. Commit your work along the way and at the conclusion. 
-  2. Next, create a new `second-library-app` project. Go through the lab another time. Push yourself to peek at the hints more sparingly and code as much as you can on your own. Try not reference the solutions branches; you can look at your own first project if you're stuck.  Again, make sure to commit your work.  Make sure you have roughly the same number of commits as you had on your first run. Version control isn't the place to cut corners!
+  2. Next, create a new `second-library-app` project. Go through the lab another time. Push yourself to peek at the hints and solutions less; you can look at your own first project if you're stuck.  Again, make sure to commit your work.  You should have roughly the same number of commits as you had on your first run. Version control isn't the place to cut corners!
 
 ### Getting Started
 
