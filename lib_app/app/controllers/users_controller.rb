@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_action :logged_in?, only: [:show]
+  before_action :require_login, only: [:show]
 
   # display list of users
   def index

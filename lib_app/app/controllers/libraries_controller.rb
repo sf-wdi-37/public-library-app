@@ -1,6 +1,6 @@
 class LibrariesController < ApplicationController
 
-  before_action :logged_in?, only: [:create]
+  before_action :require_login, only: [:new, :create]
 
   # display list of libraries
   def index
@@ -22,7 +22,6 @@ class LibrariesController < ApplicationController
   # process library creation form data & create new library
   def create
     @library = Library.create(library_params)
-
     redirect_to libraries_path
   end
 
