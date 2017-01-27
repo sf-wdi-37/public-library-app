@@ -14,18 +14,11 @@
 
 Your goal is to build a membership-tracking application in Ruby on Rails - for public libraries. Your app will allow users to sign up and track their memberships in various libraries. 
 
-# <img src="https://cloud.githubusercontent.com/assets/7833470/10899314/63829980-8188-11e5-8cdd-4ded5bcb6e36.png" height="60"> Rails Bog App
-
-### Overview
-
-Everyone does blog apps. Now, you're going to work on a **bog app**. Researchers are collecting data on a local bog and need an app to quickly record field data.
-
 ### Objectives
 
 It's time to put all your Rails knowledge into practice! In this project, you will:
 
 - Review **CRUD** in the context of a Rails application.  
-- Implement **form helpers** in a  Rails application.  
 - Implement **authentication** and **authorization** in a Rails application.  
 - Create a **many-to-many association** between two resources.   
 
