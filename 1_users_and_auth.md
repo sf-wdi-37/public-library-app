@@ -898,14 +898,6 @@ Try logging in with correct and incorrect information, and try logging out. Ensu
 Nice work! We're finished with Authentication!
 
 
-
-### Practice!
-
-Now  do it all again!!!  This time, don't use "user" as your user object - try "gymgoers", "moms", "singers", "tacos" or whatever you'd like - just no users allowed.  Once you've completed the app to this level another time, you can move on to any bonuses you're interested in below.
-
-
-
-
 ## Bonus
 
 1. On the profile page, display when the user created their account. To format the date, use Ruby's built in time formatter, [strftime](http://ruby-doc.org/core-2.2.0/Time.html#method-i-strftime).
