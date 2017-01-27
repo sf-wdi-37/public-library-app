@@ -10,9 +10,7 @@ module SessionsHelper
   end
 
   def logged_in?
-    if current_user == nil
-      redirect_to new_session_path
-    end
+    !current_user.nil?
   end
 
   def logout
