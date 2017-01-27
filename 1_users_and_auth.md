@@ -261,7 +261,7 @@ Visit `/users/new` in your browser.  You hope to see a form. But you probably se
        Prefix Verb   URI Pattern                 Controller#Action
          root GET    /                           users#index
         users GET    /users(.:format)            users#index
-   new_turkey GET    /turkeys/new(.:format)      turkeys#new
+     new_user GET    /users/new(.:format)        users#new
   ```
   
   <details><summary>click for code</summary>
