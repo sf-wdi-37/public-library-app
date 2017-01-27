@@ -28,15 +28,6 @@ It's time to put all your Rails knowledge into practice! In this project, you wi
 - Implement **form helpers** in a  Rails application.  
 - Implement **authentication** and **authorization** in a Rails application.  
 - Create a **many-to-many association** between two resources.   
-- Build memory for the steps required to create a Rails app.
-
-
-### Workflow
-
-You'll work through this project as a "time trial." You will be building the app at least 2 times, each time gaining skills through repetition. Here's how we want you to work:
-
-  1. Start by making a `first-lib-app` project. Move through the instructions and prompts below to build your app.  Time how long it takes you to complete the app.  Use as many hints as you'd like to check your work and make sure you get through the lab smoothly, and feel free to reference the solution branch for the part you're on. Commit your work along the way and at the conclusion. 
-  2. Next, create a new `second-lib-app` project. Go through the lab another time. Push yourself to peek at the hints and solutions less; you can look at your own first project if you're stuck.  Again, make sure to commit your work.  You should have roughly the same number of commits as you had on your first run. Version control isn't the place to cut corners!
 
 ### Getting Started
 
