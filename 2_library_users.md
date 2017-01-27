@@ -320,13 +320,35 @@ end
 
 ### Authorization
 
-Let's say that in order to visit a `users#show` page, you have to be logged in. Use a special `before_action` to check for this. Set up a `logged_in?` session helper to make help keep the controller "skinny."
+Let's say that in order to visit a `users#show` page, you have to be logged in, or you'll get redirected to the login form. Use a special `before_action` to check for this. Set up a `require_login` private method in the ApplicationController to keep the other controllers "skinny."
+
+
+```ruby
+
+class ApplicationController < ActionController::Base
+  # Prevent CSRF attacks by raising an exception.
+  # For APIs, you may want to use :null_session instead.
+  protect_from_forgery with: :exception
+
+  include SessionsHelper
+
+  private
+
+    def require_login
+      # FILL IN THIS METHOD!
+      # if there is NOT someone logged in,
+      # redirect to the login page
+    end
+
+end
+
+```
 
 <details><summary>click for code</summary>
 ```ruby
 class UsersController < ApplicationController
 
-  before_action :logged_in?, only: [:show]
+  before_action :require_login, only: [:show]
 
   ...
 
@@ -338,14 +360,18 @@ class UsersController < ApplicationController
 end
 ```
 
-This `before_action` line means there must be a `logged_in?` method somewhere that will be called before the show action is run.  Add a `logged_in?` helper method to the sessions helper to check whether there is a current user.
+This `before_action` will try to run a `require_login` method for the controller before the show action is run.  It turns out we'll want this method in a few different controllers. Add a private `require_login` method to the ApplicationController to check whether there is a current user and redirect if not.
 </details>
 
 What other endpoints should be protected? Should an unauthenticated user be able to CRUD resources? Think about POST, PUT, and DELETE!
 
 ### Cleanup
 
-Before moving on to bonuses, take a moment to make your site more user friendly. Link pages together so that a user can navigate more easily from their profile to their list of libraries, and from the library index to an individual library. Consider adding a better menu/navbar to make navigation easier.
+Before moving on to bonuses, take a moment to make your site more user friendly.
+
+1. Link pages together so that a user can navigate more easily from their profile to their list of libraries, and from the library index to an individual library.  Consider adding a better menu/navbar to make navigation easier.
+
+1. Add better error handling with flash messages so the user can tell what's going on. For example, there are many controller actions that assume some kind of `Model.create` will succeed.  Instead, make sure the user gets feedback if the new instance can't be saved. 
 
 ### Bonuses
 
