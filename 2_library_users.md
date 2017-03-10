@@ -326,7 +326,7 @@ Let's say that in order to visit a `users#show` page, you have to be logged in. 
 ```ruby
 class UsersController < ApplicationController
 
-  before_action :logged_in?, only: [:show]
+  before_action :require_login, only: [:show]
 
   ...
 
