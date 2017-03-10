@@ -320,13 +320,13 @@ end
 
 ### Authorization
 
-Let's say that in order to visit a `users#show` page, you have to be logged in. Use a special `before_action` to check for this. Set up a `logged_in?` session helper to make help keep the controller "skinny."
+Let's say that in order to visit a `users#show` page, you have to be logged in. Use a special `before_action` to check for this. Set up a `require_login` session helper to make help keep the controller "skinny."
 
 <details><summary>click for code</summary>
 ```ruby
 class UsersController < ApplicationController
 
-  before_action :logged_in?, only: [:show]
+  before_action :require_login, only: [:show]
 
   ...
 
