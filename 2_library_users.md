@@ -231,14 +231,17 @@ You should now test this out in the console.
 In order for us to have users become members libraries, we need to first create a `library_users` controller. Generate that now.
 
 <details><summary>click for code</summary>
+
 ```bash
 rails g controller library_users
 ```
+
 </details>
 
 We want to be able to view all user memberships to a library. We need to decide on a route for this. Based on RESTful routing, we could choose `/users/:user_id/libraries` or `/libraries/:library_id/users`.  Either one would be okay, but an application should not have both.  We'll choose the first since this app is more centered on users than libraries.
 
 <details><summary>click for code</summary>
+
 ```ruby
 
 Rails.application.routes.draw do
@@ -246,11 +249,13 @@ Rails.application.routes.draw do
   get '/users/:user_id/libraries', to: 'library_users#index', as: 'user_libraries'
 end
 ```
+
 </details>
 
 We also need the corresponding `index` method in the `library_users` controller.
 
 <details><summary>click for code</summary>
+
 ```ruby
 class LibraryUsersController < ApplicationController
 
@@ -260,11 +265,13 @@ class LibraryUsersController < ApplicationController
   end
 end
 ```
+
 </details>
 
 Then we can have the `index` view list the user's libraries (`app/views/library_users/index.html.erb`):
 
 <details><summary>click for code</summary>
+
 ```html
 
 <div><%= @user.first_name %> is a member of the following libraries</div>
@@ -287,6 +294,7 @@ We should make a button that allows a user to become a member of a library!
 Let's go back to the `libraries#index` view and add a button to do just that.
 
 <details><summary>click for code</summary>
+
 ```html
 
 <% @libraries.each do |library| %>
@@ -299,12 +307,14 @@ Let's go back to the `libraries#index` view and add a button to do just that.
   <br>
 <% end %>
 ```
+
 </details>
 
 We don't have an endpoint yet that allows a user to join a library, so let's add that now so that our form will work.
 
 
 <details><summary>click for code</summary>
+
 ```ruby
 Rails.application.routes.draw do
   ...
@@ -340,6 +350,7 @@ end
 Let's say that in order to visit a `users#show` page, you have to be logged in. Use a special `before_action` to check for this. Set up a `require_login` session helper to make help keep the controller "skinny."
 
 <details><summary>click for code</summary>
+
 ```ruby
 class UsersController < ApplicationController
 
@@ -356,6 +367,7 @@ end
 ```
 
 This `before_action` line means there must be a `logged_in?` method somewhere that will be called before the show action is run.  Add a `logged_in?` helper method to the sessions helper to check whether there is a current user.
+
 </details>
 
 What other endpoints should be protected? Should an unauthenticated user be able to CRUD resources? Think about POST, PUT, and DELETE!
