@@ -7,6 +7,7 @@
 Let's add our second model, a `Library`!
 
 <details><summary>click for code</summary>
+
 ```bash
 rails g model library name:string floor_count:integer floor_area:integer
 ```
@@ -17,6 +18,7 @@ We want a `user` to be able to join multiple libraries, but each library can als
 Thus, we need a `library_user` model for our join table. It should have foreign keys for both other models.
 
 <details><summary>click for code</summary>
+
 ```ruby
 rails g model library_user user:belongs_to library:belongs_to
 ```
@@ -35,6 +37,7 @@ rails g controller libraries
 Add a route to be able to view all the libraries.
 
 <details><summary>click for code</summary>
+
 ```ruby
 
 Rails.application.routes.draw do
@@ -42,11 +45,13 @@ Rails.application.routes.draw do
   get '/libraries', to: 'libraries#index'
 end
 ```
+
 </details>
 
 Add a `libraries#index` method to the libraries controller.
 
 <details><summary>click for code</summary>
+
 ```ruby
 
 class LibrariesController < ApplicationController
@@ -57,11 +62,13 @@ class LibrariesController < ApplicationController
 
 end
 ```
+
 </details>
 
 Add a basic view for all libraries.
 
 <details><summary>click for code</summary>
+
 ```html
 <% @libraries.each do |library| %>
   <div>
@@ -69,6 +76,7 @@ Add a basic view for all libraries.
   </div>
   <br>
 <% end %>
+
 ```
 </details>
 
@@ -77,6 +85,7 @@ Add a basic view for all libraries.
 To be able to add a new library, we need a `GET /libraries/new` route to display the form.
 
 <details><summary>click for code</summary>
+
 ```ruby
 
 Rails.application.routes.draw do
@@ -85,11 +94,13 @@ Rails.application.routes.draw do
 end
 
 ```
+
 </details>
 
 Add a `libraries#new` controller action.
 
 <details><summary>click for code</summary>
+
 ```ruby
 class LibrariesController < ApplicationController
 ...
@@ -98,11 +109,13 @@ class LibrariesController < ApplicationController
   end
 end
 ```
+
 </details>
 
 Add a view for the new library form.
 
 <details><summary>click for code</summary>
+
 ```html
 
 <%= form_for @library do |f| %>
@@ -136,6 +149,7 @@ end
 Then we need a corresponding `libraries#create`.
 
 <details><summary>click for code</summary>
+
 ```ruby
 
 class LibrariesController < ApplicationController
@@ -152,6 +166,7 @@ class LibrariesController < ApplicationController
   end
 end
 ```
+
 </details>
 
 ### CRUDing Libraries
@@ -165,6 +180,7 @@ Bonus: We recommend you also try to implement `edit`, `update`, `show`, and `del
 Before we get start letting users become library members,  we need to wire together all of our models to know about these associations. Use the `has_many` `through` pattern to set up the many-to-many association in the models.
 
 <details><summary>click for code</summary>
+
 ```ruby
 class LibraryUser < ApplicationRecord
   belongs_to :user
@@ -188,6 +204,7 @@ class Library < ApplicationRecord
   has_many :users, through: :library_users
 end
 ```
+
 </details>
 
 You should now test this out in the console.
