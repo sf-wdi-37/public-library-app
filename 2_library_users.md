@@ -6,23 +6,21 @@
 
 Let's add our second model, a `Library`!
 
-<details><summary>click for code</summary>
 
 ```bash
 rails g model library name:string floor_count:integer floor_area:integer
 ```
-</details>
+
 
 We want a `user` to be able to join multiple libraries, but each library can also have multiple members. This means a many-to-many or `n:n` relationship.
 
 Thus, we need a `library_user` model for our join table. It should have foreign keys for both other models.
 
-<details><summary>click for code</summary>
 
 ```ruby
 rails g model library_user user:belongs_to library:belongs_to
 ```
-</details>
+
 
 In the future we can store other things on the `library_user` model that are relevant to someone's membership in a library like join date, membership "level", etc.
 
@@ -36,7 +34,7 @@ rails g controller libraries
 
 Add a route to be able to view all the libraries.
 
-<details><summary>click for code</summary>
+
 
 ```ruby
 
@@ -46,11 +44,11 @@ Rails.application.routes.draw do
 end
 ```
 
-</details>
+
 
 Add a `libraries#index` method to the libraries controller.
 
-<details><summary>click for code</summary>
+
 
 ```ruby
 
@@ -63,11 +61,11 @@ class LibrariesController < ApplicationController
 end
 ```
 
-</details>
+
 
 Add a basic view for all libraries.
 
-<details><summary>click for code</summary>
+
 
 ```html
 <% @libraries.each do |library| %>
@@ -78,13 +76,13 @@ Add a basic view for all libraries.
 <% end %>
 
 ```
-</details>
+
 
 ### A New Library
 
 To be able to add a new library, we need a `GET /libraries/new` route to display the form.
 
-<details><summary>click for code</summary>
+
 
 ```ruby
 
@@ -95,11 +93,10 @@ end
 
 ```
 
-</details>
+
 
 Add a `libraries#new` controller action.
 
-<details><summary>click for code</summary>
 
 ```ruby
 class LibrariesController < ApplicationController
@@ -110,11 +107,10 @@ class LibrariesController < ApplicationController
 end
 ```
 
-</details>
+
 
 Add a view for the new library form.
 
-<details><summary>click for code</summary>
 
 ```html
 
@@ -131,11 +127,10 @@ Add a view for the new library form.
   <%= f.submit %>
 <% end %>
 ```
-</details>
+
 
 This form has nowhere to go; if we try to submit it we get an error because there is no `POST /libraries` route.  Add one.
 
-<details><summary>click for code</summary>
 
 ```ruby
 
@@ -144,11 +139,10 @@ Rails.application.routes.draw do
   post '/libraries', to: 'libraries#create'
 end
 ```
-</details>
+
 
 Then we need a corresponding `libraries#create`.
 
-<details><summary>click for code</summary>
 
 ```ruby
 
@@ -167,7 +161,7 @@ class LibrariesController < ApplicationController
 end
 ```
 
-</details>
+
 
 ### CRUDing Libraries
 We now have the ability to view all libraries  and create new libraries.
@@ -179,7 +173,6 @@ Bonus: We recommend you also try to implement `edit`, `update`, `show`, and `del
 ### Associating Users and Libraries
 Before we get start letting users become library members,  we need to wire together all of our models to know about these associations. Use the `has_many` `through` pattern to set up the many-to-many association in the models.
 
-<details><summary>click for code</summary>
 
 ```ruby
 class LibraryUser < ApplicationRecord
@@ -205,7 +198,7 @@ class Library < ApplicationRecord
 end
 ```
 
-</details>
+
 
 You should now test this out in the console.
 
@@ -230,17 +223,17 @@ You should now test this out in the console.
 
 In order for us to have users become members libraries, we need to first create a `library_users` controller. Generate that now.
 
-<details><summary>click for code</summary>
+
 
 ```bash
 rails g controller library_users
 ```
 
-</details>
+
 
 We want to be able to view all user memberships to a library. We need to decide on a route for this. Based on RESTful routing, we could choose `/users/:user_id/libraries` or `/libraries/:library_id/users`.  Either one would be okay, but an application should not have both.  We'll choose the first since this app is more centered on users than libraries.
 
-<details><summary>click for code</summary>
+
 
 ```ruby
 
@@ -250,11 +243,11 @@ Rails.application.routes.draw do
 end
 ```
 
-</details>
+
 
 We also need the corresponding `index` method in the `library_users` controller.
 
-<details><summary>click for code</summary>
+
 
 ```ruby
 class LibraryUsersController < ApplicationController
@@ -266,11 +259,9 @@ class LibraryUsersController < ApplicationController
 end
 ```
 
-</details>
 
 Then we can have the `index` view list the user's libraries (`app/views/library_users/index.html.erb`):
 
-<details><summary>click for code</summary>
 
 ```html
 
@@ -282,7 +273,6 @@ Then we can have the `index` view list the user's libraries (`app/views/library_
   <% end %>
 </ul>
 ```
-</details>
 
 We can test this by going to `localhost:3000/users/1/libraries`. If you want, you can test that this is working by launching your `rails console` and adding a library to a user, then refreshing the page.
 
@@ -293,7 +283,6 @@ We should make a button that allows a user to become a member of a library!
 
 Let's go back to the `libraries#index` view and add a button to do just that.
 
-<details><summary>click for code</summary>
 
 ```html
 
@@ -308,12 +297,11 @@ Let's go back to the `libraries#index` view and add a button to do just that.
 <% end %>
 ```
 
-</details>
+
 
 We don't have an endpoint yet that allows a user to join a library, so let's add that now so that our form will work.
 
 
-<details><summary>click for code</summary>
 
 ```ruby
 Rails.application.routes.draw do
@@ -323,11 +311,11 @@ Rails.application.routes.draw do
 end
 
 ```
-</details>
+
 
 Then, we need to add a `create` action in `LibraryUsersController` that adds the user to the library.
 
-<details><summary>click for code</summary>
+
 ```ruby
 class LibraryUsersController < ApplicationController
 
@@ -342,14 +330,14 @@ class LibraryUsersController < ApplicationController
 end
 
 ```
-</details>
+
 
 
 ### Authorization
 
 Let's say that in order to visit a `users#show` page, you have to be logged in. Use a special `before_action` to check for this. Set up a `require_login` session helper to make help keep the controller "skinny."
 
-<details><summary>click for code</summary>
+
 
 ```ruby
 class UsersController < ApplicationController
@@ -368,7 +356,6 @@ end
 
 This `before_action` line means there must be a `logged_in?` method somewhere that will be called before the show action is run.  Add a `logged_in?` helper method to the sessions helper to check whether there is a current user.
 
-</details>
 
 What other endpoints should be protected? Should an unauthenticated user be able to CRUD resources? Think about POST, PUT, and DELETE!
 
