@@ -6,19 +6,19 @@
 
 Create a new rails app without tests and with a PostgreSQL database:
 
-<details><summary>click for code</summary>
+
 ```bash
 rails new lib-app -T -d postgresql
 cd lib-app
 ```
-</details>
+
 
 Create the databases:
-<details><summary>click for code</summary>
+
 ``` bash
 rails db:create
 ```
-</details>
+
 
 
 ## Routeside-in Development
@@ -31,7 +31,7 @@ Because Rails errors are famously helpful, you can also think of this as "error 
 
 Let's start with a route for `root`, which is just a helper method in Rails for `/`.
 
-<details><summary>click for code</summary>
+
 `config/routes.rb`
 
 ```ruby
@@ -39,7 +39,7 @@ Rails.application.routes.draw do
   root to: 'users#index'
 end
 ```
-</details>
+
 
 We can look at how these routes are interpreted by Rails.
 
@@ -58,12 +58,11 @@ If we're working routeside-in, the question now is **what to do next?** There ar
 
 Let's practice using our `rails generate` skills to create a users controller and associated files.
 
-<details><summary>click for code</summary>
+
 ```bash
 rails g controller users
 ```
 
-<details><summary>click for discussion of the `rails g controller users` command</summary>
 This does something like the following:
 
 ```bash
@@ -80,13 +79,10 @@ This does something like the following:
 ```
 
 Note the special `create` statements here. The `***` ones are the most important. It creates the `users_controller.rb` file and the `views/users` directory.
-</details>
 
-</details>
 
 Now that we have a `users_controller.rb` we should add our `users#index` method.
 
-<details><summary>click for code</summary>
 ```ruby
 class UsersController < ApplicationController
 
@@ -95,19 +91,17 @@ class UsersController < ApplicationController
 
 end
 ```
-</details>
+
 
 Now, if you visit the site in your browser, you may see an error about a missing template! We need to actually create a `users/index.html.erb` view template for this route to render:
 
-<details><summary>click for code</summary>
 ```bash
 touch app/views/users/index.html.erb
 ```
-</details>
+
 
 Then we can go ahead and add some actual content to our `index` - the count of users:
 
-<details><summary>click for code</summary>
 
 ```html
 <h1>Welcome to Users Index.</h1>
@@ -117,11 +111,9 @@ There are currently <%= @users.length %> user(s) signed up!
 </div>
 ```
 
-</details>
 
 Check that root route in the browser again.  Uh-oh! If you have an error, pop back over to the controller and make sure we have the right data available for the view:
 
-<details><summary>click for code</summary>
 ```rb
 class UsersController < ApplicationController
 
@@ -131,22 +123,23 @@ class UsersController < ApplicationController
 
 end
 ```
-</details>
+
 
 But wait! If you go to `localhost:3000` after this step (like you should be!), we have a problem. No `User` model.
 
 Generate a `User` model with `email`, `first_name`, `last_name`, and `password_digest` strings. 
 
-<details><summary>click for code</summary>
+
 ```bash
 rails g model user email:string first_name:string last_name:string password_digest:string
 ```
-</details>
+
 
 Then go ahead and verify that the migration looks correct:
 
 
-<details><summary>click for sample `db/migrate/201575943834_create_users.rb`</summary>
+sample `db/migrate/201575943834_create_users.rb`:
+
 `db/migrate/201675943834_create_users.rb`
 
 ```ruby
@@ -163,7 +156,6 @@ class CreateUsers < ActiveRecord::Migration[5.0]
   end
 end
 ```
-</details>
 
 We're ready to migrate!
 
@@ -181,7 +173,7 @@ That makes sense because there's no way to sign up yet.  **YET.**
 
 Create this route. Remember to set up the proper prefix. 
 
-<details><summary>click for code</summary>
+
 ```ruby
 
 Rails.application.routes.draw do
@@ -190,7 +182,7 @@ Rails.application.routes.draw do
   get '/users/new', to: 'users#new', as: 'new_user'
 end
 ```
-</details>
+
 
 Check that you get the following output from `rails routes`:
 
@@ -202,7 +194,7 @@ new_user GET  /users/new(.:format) users#new
 
 We don't have a `users#new` controller action, so let's create one. If you'd like, you can go ahead and fill it in so it gets the data for the form view.
 
-<details><summary>click for code</summary>
+
 ```ruby
 
 class UsersController < ApplicationController
@@ -217,19 +209,18 @@ class UsersController < ApplicationController
 
 
 ```
-</details>
+
 
 Then we can continue on to creating a `new.html.erb` view for the sign up form:
 
-<details><summary>click for code</summary>
+
 ```
 touch app/views/users/new.html.erb
 ```
-</details>
+
 
 In that file, use `form_for @user` to create a sign up form. 
 
-<details><summary>click for code</summary>
 ```html
 Sign Up
 
@@ -249,11 +240,10 @@ Sign Up
   <%= f.submit "Sign Up" %>
 <% end %>
 ```
-</details>
+
 
 Visit `/users/new` in your browser.  You should see a form. Inspect it to see that the `form_for` helper renders a form like the following (note the authenticity token):
 
-<details><summary>click to see HTML </summary>
 ```html
 Sign Up
 
@@ -276,7 +266,7 @@ Sign Up
 ```
 
 Note here the correlation between the symbol we put into `f.text_field` and `name="..."` in the generated form.
-</details>
+
 
 
 Note what kind of request this form will make and the path it's going to.
@@ -295,7 +285,7 @@ It looks like this form is sending `POST /USERS`. Do we have a route for that?
 
 We don't have that route, so set it up next.
 
-<details><summary>click for code</summary>
+
 ```ruby
 Rails.application.routes.draw do
   root to: 'users#index'
@@ -304,7 +294,7 @@ Rails.application.routes.draw do
   post '/users', to: 'users#create'
 end
 ```
-</details>
+
 
 Running `rails routes` should now show:
 
@@ -317,7 +307,7 @@ new_user GET  /users/new(.:format) users#new
 
 Then, add the `create` action in the users controller. Remember to use strong parameters. (Bonus for separating these into a private method.)
 
-<details><summary>click for code</summary>
+
 ```ruby
 class UsersController < ApplicationController
 
@@ -337,7 +327,7 @@ class UsersController < ApplicationController
 
 end
 ```
-</details>
+
 
 Now when you submit the form, you probably get the following error:
 
@@ -357,7 +347,7 @@ We actually haven't set up any authentication logic yet -- part of this logic wi
 
 Uncomment your `bcrypt` in your `Gemfile`:
 
-<details><summary>click for code</summary>
+
 `Gemfile`
 
 ```ruby
@@ -368,24 +358,19 @@ gem 'bcrypt'
 
 ...
 ```
-</details>
 
 Once bcrypt is added, we can use the `has_secure_password` method in our user model:
 
-<details><summary>click for code</summary>
 ```ruby
 class User < ApplicationRecord
   has_secure_password
 end
 ```
-</details>
+
 
 Reload the page to make sure this hasn't caused any errors.
 
-
-<details><summary>click for hint to solve `LoadError`</summary>
 We changed the Gemfile by bringing in `bcrypt` - did you remember to `bundle install`? You may also need to restart your server. 
-</details>
 
 
 Now when we post the form for the user, you'll see the user being created. The difference now is that the password is being properly hashed and salted into a `password_digest`, so it's safe to store.  Thanks for `has_secure_password`, Rails!
@@ -396,7 +381,6 @@ Now when we post the form for the user, you'll see the user being created. The d
 
 Now we'll add a route to `GET /users/:id`.
 
-<details><summary>click for code</summary>
 ```ruby
 
 Rails.application.routes.draw do
@@ -410,7 +394,7 @@ end
 ```
 
 Guess what fun error you'll get later if you put the `/users/:id` route before the `/users/new` route!
-</details>
+
 
 Rails routes!
 
@@ -424,7 +408,7 @@ new_user GET  /users/new(.:format) users#new
 
 Also  add a `users#show` controller action.
 
-<details><summary>click for code</summary>
+
 ```ruby
 
 class UsersController < ApplicationController
@@ -436,11 +420,11 @@ class UsersController < ApplicationController
 end
 
 ```
-</details>
+
 
 Try visiting `/users/1` in the browser.  We need a `users/show.html.erb` to display the user's information.
 
-<details><summary>click for code</summary>
+
 ```bash
 touch app/views/users/show.html.erb
 ```
@@ -452,7 +436,7 @@ touch app/views/users/show.html.erb
 </div>
 
 ```
-</details>
+
 
 Let's test what we've got so far by going to the show page of an existing user in the browser.
 
@@ -495,7 +479,7 @@ This will create  `sessions_controller.rb`, `sessions_helper.rb` and a `views/se
 
 Now we need to add the `sessions#new` action. This will just show a log in form that takes a user's password and email. 
 
-<details><summary>click for code</summary>
+
 ```ruby
 
 class SessionsController < ApplicationController
@@ -506,21 +490,21 @@ class SessionsController < ApplicationController
 
 end
 ```
-</details>
+
 
 Then we need to add a view for the `sessions/new.html.erb`:
 
-<details><summary>click for code</summary>
+
 ```bash
 touch app/views/sessions/new.html.erb
 ```
-</details>
+
 
 
 
 This login form can look very similar to the form for sign in, but we'll need to be a little more specific about the `form_for` line, but it only needs email and password fields:
 
-<details><summary>click for code</summary>
+
 ```html
 
 Login
@@ -536,7 +520,7 @@ Login
 <% end %>
 
 ```
-</details>
+
 
 Try using an `email_field` for some built-in client side validataions and a `password_field` to obscure the password as the user types.
 
@@ -546,7 +530,7 @@ Verify that you can see the log in form.  What error do you get when you submit?
 
 Note that the form is getting submited to `POST /sessions`. We don't have a `sessions#create` however or a route to handle the post.
 
-<details><summary>click for code</summary>
+
 ```ruby
 
 Rails.application.routes.draw do
@@ -558,7 +542,7 @@ Rails.application.routes.draw do
 
 end
 ```
-</details>
+
 
 Verify your routes:
 
@@ -581,7 +565,6 @@ This will involve:
 - creating `login` and `current_user` helper methods in the sessions helpers file
 - including the session helper methods in the application controller
 
-<details><summary>click for code</summary>
 
 ```ruby
 
@@ -606,12 +589,11 @@ HOLD THE HORSES! What is `User.confirm`?  The comment claims to tell us what it'
 
 Nope, it's something we suggest you add to your `User` model as a custom model method.  This will make your code more modular.
 
-</details>
+
 
 Before we go forward let's go ahead and drop in a very key piece of confirmation logic into our `User` model. Create a `confirm` class method that checks whether the email and password from the parameters are a matching pair.   Use `authenticate` from `has_secure_password`.
 
 
-<details><summary>click for code</summary>
 ```ruby
 class User < ApplicationRecord
   has_secure_password
@@ -626,7 +608,6 @@ end
 HOLD THOSE HORSES!  What's up with ` ?  : `?  Don't worry, it's just your friendly neighborhood ternary operator.  It's keeping us from trying to call `@user.authenticate` when the `@user` is `nil`.  
 
 BUT WOOAH, HORSES!  What is `@user.authenticate`?!? Where does that come from?  What is it doing?  Hint: [`has_secure_password`](http://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html#method-i-has_secure_password).
-</details>
 
 
 
@@ -644,7 +625,7 @@ Try with an existing correct email/password combination and with an incorrect pa
 
 Okay, back to the `sessions#create` action.  If we confirm this is an authentic user, we should log them in. Write code that logs in confirmed users and sends them to their show page, and write code that redirects non-confirmed visitors to the login path. (You may want to create and use a `login` session helper method). 
 
-<details><summary>click for code</summary>
+
 ```ruby
 
 class SessionsController < ApplicationController
@@ -665,7 +646,7 @@ end
 
 HORSE, STOP!  What the heck is this `login` method?  It's a method we suggest you add to the helper methods for this controller. 
 
-<details><summary>click for code</summary>
+
 
 Find the sessions helper file and add:
 
@@ -698,8 +679,6 @@ class ApplicationController < ActionController::Base
 end
 
 ```
-</details>
-</details>
 
 Now try to log in using the form, both with a correct email/password combination and an incorrect one.  Do you see a welcome when you use the correct information? And do you see the log in form again if you enter the wrong one (hm, a flash message would be nice here)? If so, you're ready to continue. Otherwise, you should start debug before moving on.
 
@@ -707,7 +686,7 @@ Now try to log in using the form, both with a correct email/password combination
 
 After a user is signed up they should be logged in. Thank goodness we have a convenient `login` helper to keep our code DRY! Refactor the controller action that handles signing up so that it calls this `login` method for the new user and redirects to the user show page. 
 
-<details><summary>click for code</summary>
+
 ```ruby
 
 class UsersController < ApplicationController
@@ -721,7 +700,7 @@ class UsersController < ApplicationController
 end
 
 ```
-</details>
+
 
 Try signing up - you should see the welcome message from the user show page. 
 
@@ -729,7 +708,7 @@ Try signing up - you should see the welcome message from the user show page.
 
 Start with the route! We'll use the `sessions#destroy` controller action to handle logging out. 
 
-<details><summary>click for code</summary>
+
 ```ruby
 Rails.application.routes.draw do
   # ...
@@ -738,7 +717,7 @@ Rails.application.routes.draw do
   post '/sessions', to: 'sessions#create'
 end
 ```
-</details>
+
 
 Run `rails routes`!
 
@@ -760,7 +739,7 @@ Strictly speaking, it isn't RESTful to do a destroy with the `GET` method (it sh
 
 The `sessions#destroy` controller action needs to clear the `user_id` from the session. This is a great time to start thinking about using a `logout` session helper method, too. 
 
-<details><summary>click for code</summary>
+
 ```ruby
 class SessionsController < ApplicationController
     ...
@@ -772,11 +751,11 @@ class SessionsController < ApplicationController
 
 end
 ```
-</details>
+
 
 Let's go ahead and add that `logout` helper method to correspond to the `login` we wrote before.
 
-<details><summary>click for code</summary>
+
 ```ruby
 module SessionsHelper
 
@@ -795,13 +774,13 @@ module SessionsHelper
 
 end
 ```
-</details>
+
 
 Now we can go directly to the `/logout` URL to log out (delete the session user_id), but we should also have a "Log Out" button somewhere.
 
 Even better would be a navbar with all the login/signup/logout options. Let's add a very simple list of navigation links to `views/layouts/application.html.erb` with some conditional logic, depending on whether we have a current user logged in:
 
-<details><summary>click for code</summary>
+
 ```html
 <body>
   <ul>
@@ -819,13 +798,13 @@ Even better would be a navbar with all the login/signup/logout options. Let's ad
 </body>
 
 ```
-</details>
+
 
 Go ahead and check all your links are working (try it both logged in and logged out).
 
 As a final touch, let's add "flash" messages to inform the user that they are "Successfully logged in" and "Successfully logged out". Start by setting up the flash messages in the controller. 
 
-<details><summary>click for code</summary>
+
 ``` ruby
 class SessionsController < ApplicationController
   # ...
@@ -851,11 +830,11 @@ class SessionsController < ApplicationController
 
 end
 ```
-</details>
+
 
 Update `views/layouts/application.html.erb` to display the messages.
 
-<details><summary>click for code</summary>
+
 ``` html
 <body>
 <!-- ... -->
@@ -869,7 +848,7 @@ Update `views/layouts/application.html.erb` to display the messages.
 
 </body>
 ```
-</details>
+
 
 Try logging in with correct and incorrect information, and try logging out. Ensure that these are working. 
 
