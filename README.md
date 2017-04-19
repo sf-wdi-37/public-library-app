@@ -25,8 +25,8 @@ By the end of this lab you will have:
 
 Do not fork and clone this repo, as you will be creating a new Rails project. You should, however, track your project in git and GitHub.  Make frequent commits with descriptive commit messages!  
 
-####Part 1: [Users & Auth](1_users_and_auth.md)
+#### Part 1: [Users & Auth](1_users_and_auth.md)
 Solution branch: `1_users_and_auth`
 
-####Part 2: [Library Users](2_library_users.md)
+#### Part 2: [Library Users](2_library_users.md)
 Solution branch: `2_library_users`
