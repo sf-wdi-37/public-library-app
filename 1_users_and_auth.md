@@ -171,7 +171,7 @@ We're ready to migrate!
 rails db:migrate
 ```
 
-Ok, now we should see `0` users signed up on the home page.  
+Ok, now we should see `0` users signed up on the home page. If you don't, debug! 
 
 That makes sense because there's no way to sign up yet.  **YET.**
 
@@ -251,7 +251,28 @@ Sign Up
 ```
 </details>
 
-Visit `/users/new` in your browser.  You should see a form. Inspect it to see that the `form_for` helper renders a form like the following (note the authenticity token):
+Visit `/users/new` in your browser.  You hope to see a form. But you probably see an error mentioning `undefined method users_path`.  Make sure this path is defined by adding one or more routes. If you need a refresher on how path helper methods like `users_path` relate to routes, review [the path helpers section of the views and helpers lesson](https://github.com/sf-wdi-34/rails-views-and-helpers#path-helpers).  
+
+<details><summary>click for hint</summary>
+  You'll need a route with the `users` prefix so that you get the `users_path` helper. Remember that, in your routes, `as:` will create a prefix.
+  
+  ```
+  $ rake routes
+       Prefix Verb   URI Pattern                 Controller#Action
+         root GET    /                           users#index
+        users GET    /users(.:format)            users#index
+     new_user GET    /users/new(.:format)        users#new
+  ```
+  
+  <details><summary>click for code</summary>
+  ```rb
+  # in config/routes.rb
+  get '/users', to: 'users#index', as: 'users'
+  ```
+  </details>
+</details>
+
+Now you should see a form. Inspect it to see that the `form_for` helper renders a form like the following (note the authenticity token):
 
 <details><summary>click to see HTML </summary>
 ```html
@@ -875,14 +896,6 @@ Try logging in with correct and incorrect information, and try logging out. Ensu
 
 
 Nice work! We're finished with Authentication!
-
-
-
-### Practice!
-
-Now  do it all again!!!  This time, don't use "user" as your user object - try "gymgoers", "moms", "singers", "tacos" or whatever you'd like - just no users allowed.  Once you've completed the app to this level another time, you can move on to any bonuses you're interested in below.
-
-
 
 
 ## Bonus
