@@ -859,9 +859,7 @@ Nice work! We're finished with Authentication!
 
 ### Practice!
 
-Now  do it all again!!!  This time, don't use "user" as your user object - try "gymgoers", "moms", "singers", "tacos" or whatever you'd like - just no users allowed.  Once you've completed the app to this level another time, you can move on to any bonuses you're interested in below.
-
-
+Now  do it all again!!!  This time, don't use "user" as your user object - try "gymgoers", "moms", "singers", "tacos" or whatever you'd like - just no users allowed. The point is that we want you to build this again with a critical eye for the name of the model and the name of the variables. You can't just copy/paste, you'll need to make informed decisions about how to replicate the functionality. Once you've completed the app to this level another time, you can move on to any bonuses you're interested in below.
 
 
 ## Bonus
