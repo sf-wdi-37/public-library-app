@@ -335,8 +335,52 @@ end
 
 ### Authorization
 
-Let's say that in order to visit a `users#show` page, you have to be logged in. Use a special `before_action` to check for this. Set up a `require_login` session helper to make help keep the controller "skinny."
+Let's say that in order to visit a `users#show` page, you have to be logged in. 
 
+Write some code in the `show` method to check if there is a user logged in before you render the view. If there is no one logged in, redirect to the login page with a helpful flash message.
+
+
+
+```ruby
+class UsersController < ApplicationController
+
+  ...
+
+  def show
+    # if there is currently a user logged in
+      # find the user whose page was requested 
+      @user = User.find(params[:id])
+      # render the show view
+      render :show
+    # if there is NOT currently a user logged in
+      # add a message to the flash hash
+      # redirect to the login page
+  end
+
+end
+```
+
+You will probably want to check if a user is logged in before doing other actions, possibly in other controllers. Right now, you would have to repeat the code you just wrote inside every controller action.  To help keep controllers "skinny," refactor that code:
+
+Set up a `require_login` session helper method. It should check if there is a logged in user and then redirect to the login page if there isn't one. Refactor your `show` method to use the new helper method
+
+
+```ruby
+class UsersController < ApplicationController
+
+  ...
+
+  def show
+    require_login 
+    @user = User.find(params[:id])
+    render :show
+  end
+
+end
+```
+
+
+To reduce repetition even further (once we start adding this to other actions), add a special `before_action` to run the `require_login` method.
 
 
 ```ruby
@@ -357,7 +401,8 @@ end
 This `before_action` line means there must be a `logged_in?` method somewhere that will be called before the show action is run.  Add a `logged_in?` helper method to the sessions helper to check whether there is a current user.
 
 
-What other endpoints should be protected? Should an unauthenticated user be able to CRUD resources? Think about POST, PUT, and DELETE!
+**What other endpoints should be protected?** Should an unauthenticated user be able to CRUD resources? Think about POST, PUT, and DELETE!  Currently, the `require_login` method just checks if the user is logged in, not whether they own the resource they're trying to see.  Consider creating another helper like `require_ownership` that checks specifically whether the id of the current user matches the user id from any route parameters - a match means the person owns that resource!
+
 
 ### Cleanup
 
