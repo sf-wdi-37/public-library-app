@@ -398,11 +398,6 @@ class UsersController < ApplicationController
 end
 ```
 
-This `before_action` line means there must be a `logged_in?` method somewhere that will be called before the show action is run.  Add a `logged_in?` helper method to the sessions helper to check whether there is a current user.
-
-
-**What other endpoints should be protected?** Should an unauthenticated user be able to CRUD resources? Think about POST, PUT, and DELETE!  Currently, the `require_login` method just checks if the user is logged in, not whether they own the resource they're trying to see.  Consider creating another helper like `require_ownership` that checks specifically whether the id of the current user matches the user id from any route parameters.  A match means the person owns that resource; a mismatch might mean they should be redirected (if they're not authorized to perform whatever action they're trying)!
-
 
 ### Cleanup
 
@@ -410,7 +405,12 @@ Before moving on to bonuses, take a moment to make your site more user friendly.
 
 ### Bonuses
 
-* Can you add books to the application?
+* What other endpoints should be protected?
+    - Should an unauthenticated user be able to CRUD resources? Think about POST, PUT, and DELETE!  Currently, the `require_login` method just checks if the user is logged in, not whether they own the resource they're trying to see.
+    - Create another helper like `require_ownership` that checks specifically whether the id of the current user matches the user id from any route parameters.  A match means the person owns that resource; a mismatch might mean they should be redirected (if they're not authorized to perform whatever action they're trying)!  
+
+* Add books!
     - For starters, just create a `Book` model and the associated views.
-* Can you add books to the library?
+    
+* Add books associated with libraries!
     - What kind of a relationship is that? Where would foreign keys like `book_id` and `library_id` live in your database tables?
