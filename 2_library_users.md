@@ -401,7 +401,7 @@ end
 This `before_action` line means there must be a `logged_in?` method somewhere that will be called before the show action is run.  Add a `logged_in?` helper method to the sessions helper to check whether there is a current user.
 
 
-**What other endpoints should be protected?** Should an unauthenticated user be able to CRUD resources? Think about POST, PUT, and DELETE!  Currently, the `require_login` method just checks if the user is logged in, not whether they own the resource they're trying to see.  Consider creating another helper like `require_ownership` that checks specifically whether the id of the current user matches the user id from any route parameters - a match means the person owns that resource!
+**What other endpoints should be protected?** Should an unauthenticated user be able to CRUD resources? Think about POST, PUT, and DELETE!  Currently, the `require_login` method just checks if the user is logged in, not whether they own the resource they're trying to see.  Consider creating another helper like `require_ownership` that checks specifically whether the id of the current user matches the user id from any route parameters.  A match means the person owns that resource; a mismatch might mean they should be redirected (if they're not authorized to perform whatever action they're trying)!
 
 
 ### Cleanup
